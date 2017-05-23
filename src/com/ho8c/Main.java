@@ -13,7 +13,7 @@ public class Main {
         String conference;
         String date;
         String prefix;
-        String firstName;cd
+        String firstName;
         String middleName;
         String lastName;
         String degree;
