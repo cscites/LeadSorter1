@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Created by chris on 5/23/17.
  */
 public class LeadSetCreator {
-    HashSet<Lead>leads = new HashSet<>();
+    private HashSet<Lead>leads = new HashSet<>();
     public LeadSetCreator(String source) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(source));
         scanner.useDelimiter(",");
@@ -49,7 +49,7 @@ public class LeadSetCreator {
     }
 
 
-    public HashSet getLeadSet(){
+    HashSet getLeadSet(){
         return leads;
     }
 }
