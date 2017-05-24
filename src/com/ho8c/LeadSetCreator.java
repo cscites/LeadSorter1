@@ -10,10 +10,11 @@ import java.util.Scanner;
  */
 public class LeadSetCreator {
     private HashSet<Lead>leads = new HashSet<>();
+    private Lead testLead;
     public LeadSetCreator(String source) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(source));
         scanner.useDelimiter(",|\\n");
-        Lead testLead = new Lead(scanner.next(), scanner.next(), scanner.next(), scanner.next(),
+        testLead = new Lead(scanner.next(), scanner.next(), scanner.next(), scanner.next(),
                 scanner.next(), scanner.next(), scanner.next(), scanner.next(), scanner.next(),
                 scanner.next(), scanner.next(), scanner.next(), scanner.next(), scanner.next(),
                 scanner.next(), scanner.next(), scanner.next(), scanner.next(), scanner.next(),
@@ -73,5 +74,9 @@ public class LeadSetCreator {
 
     HashSet getLeadSet(){
         return leads;
+    }
+
+    public Lead getHeaders(){
+        return testLead;
     }
 }
