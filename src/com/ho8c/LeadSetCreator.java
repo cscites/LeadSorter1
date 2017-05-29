@@ -33,37 +33,51 @@ public class LeadSetCreator {
                 testLead.getGeoInt().matches("Geographic_Interest") &&
                 testLead.getAvailability().matches("Available") && testLead.getStatus().matches("Status")){
 
-            scanner.nextLine();
+            /** scanner.nextLine();
+            scanner.reset();
+            scanner.useDelimiter("\\n");
+            int a = 1;
             while(scanner.hasNextLine()){
-                String showSource = scanner.next();
-                String specialty = scanner.next();
-                String conference = scanner.next();
-                String date = scanner.next();
-                String prefix = scanner.next();
-                String firstName = scanner.next();
-                String middleName = scanner.next();
-                String lastName = scanner.next();
-                String degree = scanner.next();
-                String company = scanner.next();
-                String address1 = scanner.next();
-                String address2 = scanner.next();
-                String city = scanner.next();
-                String state = scanner.next();
-                String zip = scanner.next();
-                String country = scanner.next();
-                String phone = scanner.next();
-                String fax = scanner.next();
-                String email = scanner.next();
-                String notes = scanner.next();
-                String geoInt = scanner.next();
-                String availability = scanner.next();
-                String status = scanner.next();
-                Lead candidate = new Lead(showSource, specialty, conference, date, prefix, firstName, middleName,
-                        lastName, degree, company, address1, address2, city, state, zip, country, phone, fax,
-                        email, notes, geoInt, availability, status);
+                String test = scanner.next();
+                a++;
+                String[] variables = new String[23];
+                int n = variables.length - 1;
+                while (n >= 0){
+                    if(test.lastIndexOf(",") == -1){
+                        variables[n] = test.trim();
+                        n--;
+                    }else if(test.substring(test.length()-1).matches("\"")){
+                        test = test.substring(0, test.lastIndexOf("\""));
+                        variables[n] = test.substring(test.lastIndexOf("\"")+1, test.length()).trim();
+                        test = test.substring(0, test.lastIndexOf("\"")-1);
+                        n--;
+                    }else{
+                        variables[n] = test.substring(test.lastIndexOf(",")+1, test.length()).trim();
+                        test = test.substring(0, test.lastIndexOf(","));
+                        n--;
+                    }
+                }
+
+                Lead candidate = new Lead(variables[0], variables[1], variables[2], variables[3],
+                        variables[4], variables[5], variables[6], variables[7], variables[8],
+                        variables[9], variables[10], variables[11], variables[12], variables[13],
+                        variables[14], variables[15], variables[16], variables[17], variables[18],
+                        variables[19], variables[20], variables[21], variables[22]);
                 leads.add(candidate);
                 scanner.nextLine();
+            }**/
+
+            HashSet<String[]>variables = new CsvParser("/home/chris/Desktop/AAN 2017/leads.csv").getVariableSets();
+
+            for (String[] var: variables){
+                if(var.length == 23){
+                    Lead candidate = new Lead(var[0], var[1], var[2], var[3], var[4], var[5], var[6],
+                            var[7], var[8], var[9], var[10], var[11], var[12], var[13], var[14], var[15],
+                            var[16], var[17], var[18], var[19], var[20], var[21], var[22]);
+                    leads.add(candidate);
+                }
             }
+
         }
         else{
             System.out.println("Improper template");
