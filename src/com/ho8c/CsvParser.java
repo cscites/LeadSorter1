@@ -2,14 +2,14 @@ package com.ho8c;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Created by chris on 5/29/17.
  */
-public class CsvParser {
-    private HashSet<String[]> variableSets  = new HashSet<>();
+public class CsvParser extends ArrayList<String[]> {
+    private ArrayList<String[]> variableSets  = new ArrayList<>();
     public CsvParser(String csvFile) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(csvFile));
         scanner.useDelimiter("\\n");
@@ -17,9 +17,10 @@ public class CsvParser {
         int sizingNum = headerString.replaceAll(",", "").length()-1;
         int z = headerString.length() - sizingNum;
         System.out.println(z);
-        while(scanner.hasNextLine()) {
-            String[] variables = new String[z];
+
+        while(scanner.hasNext()) {
             String line = scanner.next();
+            String[] variables = new String[z];
             int n = variables.length - 1;
             while (n >= 0) {
                 if (line.lastIndexOf(",") == -1) {
@@ -41,7 +42,7 @@ public class CsvParser {
 
     }
 
-    HashSet getVariableSets(){
+    ArrayList<String[]> getVariableSets(){
         return variableSets;
     }
 
