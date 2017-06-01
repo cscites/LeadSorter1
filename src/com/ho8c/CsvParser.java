@@ -12,11 +12,23 @@ public class CsvParser extends ArrayList<String[]> {
     private ArrayList<String[]> variableSets  = new ArrayList<>();
     public CsvParser(String csvFile) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(csvFile));
+        StringBuilder string = new StringBuilder();
         scanner.useDelimiter("\\n");
-        String headerString = scanner.next();
+        string.append(scanner.next());
+
+
+        while (string.substring(string.lastIndexOf(",")).matches(",")){
+            string.replace(string.lastIndexOf(","), string.length()-1, "");
+        }
+        String headerString = string.toString();
+
         int sizingNum = headerString.replaceAll(",", "").length()-1;
         int z = headerString.length() - sizingNum;
         System.out.println(z);
+        System.out.println(string.lastIndexOf(","));
+        System.out.println(string.length());
+        System.out.println(string);
+        System.out.println(headerString);
 
         while(scanner.hasNext()) {
             String line = scanner.next();

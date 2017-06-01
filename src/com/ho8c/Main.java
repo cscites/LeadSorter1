@@ -6,7 +6,7 @@ import java.util.HashSet;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-       HashSet<Lead>leads = new LeadSetCreator("/home/chris/Desktop/AAN 2017/leads.csv").getLeadSet();
+       HashSet<Lead>leads = new LeadSetCreator("C:/Users/chris.sites/Desktop/PLink Documents/AAOS 2017/leads.csv").getLeadSet();
 
 
         for (Lead lead: leads) {
