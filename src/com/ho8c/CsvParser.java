@@ -16,14 +16,7 @@ public class CsvParser extends ArrayList<String[]> {
         scanner.useDelimiter("\\n");
         string.append(scanner.next());
 
-        while(Character.isWhitespace(string.charAt(string.length()-1))){
-            string.setLength(string.length()-1);
-        }
-
-
-        while (Character.toString(string.charAt(string.length()-1)).matches(",")){
-            string.setLength(string.length()-1);
-        }
+        lineTrim(string);
 
         String headerString = string.toString();
 
@@ -37,13 +30,7 @@ public class CsvParser extends ArrayList<String[]> {
             String[] variables = new String[z];
             int n = variables.length - 1;
 
-            while(Character.isWhitespace(string.charAt(string.length()-1))){
-                string.setLength(string.length()-1);
-            }
-
-            while (Character.toString(string.charAt(string.length()-1)).matches(",")){
-                string.setLength(string.length()-1);
-            }
+            lineTrim(string);
 
             while (n >= 0) {
                 if (string.lastIndexOf(",") == -1) {
@@ -68,6 +55,16 @@ public class CsvParser extends ArrayList<String[]> {
             string.setLength(0);
         }
 
+    }
+
+    private void lineTrim (StringBuilder string){
+        while(Character.isWhitespace(string.charAt(string.length()-1))){
+            string.setLength(string.length()-1);
+        }
+
+        while (Character.toString(string.charAt(string.length()-1)).matches(",")){
+            string.setLength(string.length()-1);
+        }
     }
 
     ArrayList<String[]> getVariableSets(){
