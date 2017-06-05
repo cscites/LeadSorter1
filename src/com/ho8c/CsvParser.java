@@ -16,40 +16,55 @@ public class CsvParser extends ArrayList<String[]> {
         scanner.useDelimiter("\\n");
         string.append(scanner.next());
 
-
-        while (string.substring(string.lastIndexOf(",")).matches(",")){
-            string.replace(string.lastIndexOf(","), string.length()-1, "");
+        while(Character.isWhitespace(string.charAt(string.length()-1))){
+            string.setLength(string.length()-1);
         }
+
+
+        while (Character.toString(string.charAt(string.length()-1)).matches(",")){
+            string.setLength(string.length()-1);
+        }
+
         String headerString = string.toString();
 
         int sizingNum = headerString.replaceAll(",", "").length()-1;
         int z = headerString.length() - sizingNum;
-        System.out.println(z);
-        System.out.println(string.lastIndexOf(","));
-        System.out.println(string.length());
-        System.out.println(string);
-        System.out.println(headerString);
+
+        string.setLength(0);
 
         while(scanner.hasNext()) {
-            String line = scanner.next();
+            string.append(scanner.next());
             String[] variables = new String[z];
             int n = variables.length - 1;
+
+            while(Character.isWhitespace(string.charAt(string.length()-1))){
+                string.setLength(string.length()-1);
+            }
+
+            while (Character.toString(string.charAt(string.length()-1)).matches(",")){
+                string.setLength(string.length()-1);
+            }
+
             while (n >= 0) {
-                if (line.lastIndexOf(",") == -1) {
-                    variables[n] = line.trim();
+                if (string.lastIndexOf(",") == -1) {
+                    while(Character.isWhitespace(string.charAt(string.length()-1))){
+                        string.setLength(string.length()-1);
+                    }
+                    variables[n] = string.toString();
                     n--;
-                } else if (line.substring(line.length() - 1).matches("\"")) {
-                    line = line.substring(0, line.lastIndexOf("\""));
-                    variables[n] = line.substring(line.lastIndexOf("\"") + 1, line.length()).trim();
-                    line = line.substring(0, line.lastIndexOf("\"") - 1);
+                } else if (string.substring(string.length() - 1).matches("\"")) {
+                    string.setLength(string.lastIndexOf("\""));
+                    variables[n] = string.substring(string.lastIndexOf("\"") + 1, string.length()).trim();
+                    string.setLength(string.lastIndexOf("\"") - 1);
                     n--;
                 } else {
-                    variables[n] = line.substring(line.lastIndexOf(",") + 1, line.length()).trim();
-                    line = line.substring(0, line.lastIndexOf(","));
+                    variables[n] = string.substring(string.lastIndexOf(",") + 1, string.length()).trim();
+                    string.setLength(string.lastIndexOf(","));
                     n--;
                 }
             }
             variableSets.add(variables);
+            string.setLength(0);
         }
 
     }
