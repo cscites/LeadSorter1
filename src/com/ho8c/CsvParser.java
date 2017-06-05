@@ -39,7 +39,6 @@ public class CsvParser extends ArrayList<String[]> {
                     }
                     variables[n] = string.toString();
                     n--;
-
                 } else if (string.substring(string.length() - 1).matches("\"")) {
                     string.setLength(string.lastIndexOf("\""));
                     variables[n] = string.substring(string.lastIndexOf("\"") + 1, string.length()).trim();
