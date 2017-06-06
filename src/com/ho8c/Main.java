@@ -1,13 +1,19 @@
 package com.ho8c;
 
 import java.io.FileNotFoundException;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-       HashSet<Lead>leads = new LeadSetCreator("C:/Users/chris.sites/Desktop/PLink Documents/AAOS 2017/leads.csv").getLeadSet();
+       LeadSetCreator test = new LeadSetCreator("/home/chris/Desktop/leads.csv");
+       ArrayList<Lead> leads = test.getLeadSet();
+       String[] headers = test.getHeaders();
 
+        for (String heads:headers) {
+            System.out.print(heads + " | ");
+        }
+        System.out.println();
 
         for (Lead lead: leads) {
             System.out.print(lead.getSource() + " | ");

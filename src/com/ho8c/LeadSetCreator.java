@@ -3,23 +3,23 @@ package com.ho8c;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
 
 /**
  * Created by chris on 5/23/17.
  */
-public class LeadSetCreator {
-    private HashSet<Lead>leads = new HashSet<>();
-    private Lead testLead;
-    public LeadSetCreator(String source) throws FileNotFoundException {
+class LeadSetCreator {
+    private ArrayList<Lead>leads = new ArrayList<>();
+    private String[] headers;
+    LeadSetCreator(String source) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(source));
         scanner.useDelimiter(",|\\n");
-        testLead = new Lead(scanner.next(), scanner.next(), scanner.next(), scanner.next(),
-                scanner.next(), scanner.next(), scanner.next(), scanner.next(), scanner.next(),
-                scanner.next(), scanner.next(), scanner.next(), scanner.next(), scanner.next(),
-                scanner.next(), scanner.next(), scanner.next(), scanner.next(), scanner.next(),
-                scanner.next(), scanner.next(), scanner.next(), scanner.next());
+        Lead testLead = new Lead(scanner.next().trim(), scanner.next().trim(), scanner.next().trim(),
+                scanner.next().trim(), scanner.next().trim(), scanner.next().trim(), scanner.next().trim(),
+                scanner.next().trim(), scanner.next().trim(), scanner.next().trim(), scanner.next().trim(),
+                scanner.next().trim(), scanner.next().trim(), scanner.next().trim(), scanner.next().trim(),
+                scanner.next().trim(), scanner.next().trim(), scanner.next().trim(), scanner.next().trim(),
+                scanner.next().trim(), scanner.next().trim(), scanner.next().trim(), scanner.next().trim());
         System.out.println(testLead.getSource() + " " + testLead.getAvailability()  + " " + testLead.getStatus());
         if(testLead.getSource().matches("Source") && testLead.getSpecialty().matches("Specialty") &&
                 testLead.getConference().matches("Conference") && testLead.getDate().matches("Date") &&
@@ -34,7 +34,9 @@ public class LeadSetCreator {
                 testLead.getGeoInt().matches("Geographic_Interest") &&
                 testLead.getAvailability().matches("Available") && testLead.getStatus().matches("Status")){
 
-            ArrayList<String[]> variables = new CsvParser(source).getVariableSets();
+            CsvParser leadSet = new CsvParser(source);
+            ArrayList<String[]> variables = leadSet.getVariableSets();
+            headers = leadSet.getHeaders();
 
             for (String[] var: variables){
                 if(var.length == 23){
@@ -53,11 +55,11 @@ public class LeadSetCreator {
     }
 
 
-    HashSet getLeadSet(){
+    ArrayList<Lead> getLeadSet(){
         return leads;
     }
 
-    public Lead getHeaders(){
-        return testLead;
+    String[] getHeaders(){
+        return headers;
     }
 }
