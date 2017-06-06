@@ -18,32 +18,19 @@ public class CsvParser extends ArrayList<String[]> {
         string.append(scanner.next());
 
         lineTrim(string);
-
         String headerString = string.toString();
-
         int sizingNum = headerString.replaceAll(",", "").length()-1;
         int z = headerString.length() - sizingNum;
-
         headerArray = new String[z];
-        int n = headerArray.length - 1;
-        while (n >= 0) {
-            lineParser(string, headerArray, n);
-            n--;
-        }
+        lineParser(string,headerArray);
 
         string.setLength(0);
 
         while(scanner.hasNext()) {
             string.append(scanner.next());
             String[] variables = new String[z];
-            n = variables.length - 1;
-
             lineTrim(string);
-
-            while (n >= 0) {
-                lineParser(string, variables, n);
-                n--;
-            }
+            lineParser(string,variables);
             variableSets.add(variables);
             string.setLength(0);
         }
@@ -54,33 +41,37 @@ public class CsvParser extends ArrayList<String[]> {
         while(Character.isWhitespace(string.charAt(string.length()-1))){
             string.setLength(string.length()-1);
         }
-
         while (Character.toString(string.charAt(string.length()-1)).matches(",")){
             string.setLength(string.length()-1);
         }
     }
 
-    private void lineParser(StringBuilder string, String[] variables, int n){
-        if (string.lastIndexOf(",") == -1) {
-            while(Character.isWhitespace(string.charAt(string.length()-1))){
-                string.setLength(string.length()-1);
+    private void lineParser(StringBuilder string, String[] variables){
+        int n = variables.length - 1;
+        while (n >= 0) {
+            if (string.lastIndexOf(",") == -1) {
+                while(Character.isWhitespace(string.charAt(string.length()-1))){
+                    string.setLength(string.length()-1);
+                }
+                variables[n] = string.toString();
+            } else if (string.substring(string.length() - 1).matches("\"")) {
+                string.setLength(string.lastIndexOf("\""));
+                variables[n] = string.substring(string.lastIndexOf("\"") + 1, string.length()).trim();
+                string.setLength(string.lastIndexOf("\"") - 1);
+            } else {
+                variables[n] = string.substring(string.lastIndexOf(",") + 1, string.length()).trim();
+                string.setLength(string.lastIndexOf(","));
             }
-            variables[n] = string.toString();
-        } else if (string.substring(string.length() - 1).matches("\"")) {
-            string.setLength(string.lastIndexOf("\""));
-            variables[n] = string.substring(string.lastIndexOf("\"") + 1, string.length()).trim();
-            string.setLength(string.lastIndexOf("\"") - 1);
-        } else {
-            variables[n] = string.substring(string.lastIndexOf(",") + 1, string.length()).trim();
-            string.setLength(string.lastIndexOf(","));
+            n--;
         }
+
     }
 
     ArrayList<String[]> getVariableSets(){
         return variableSets;
     }
 
-    public String[] getHeaders(){
+    String[] getHeaders(){
         return headerArray;
     }
 
