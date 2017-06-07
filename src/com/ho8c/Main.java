@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-       LeadSetCreator test = new LeadSetCreator("c:/Users/chris.sites/Desktop/PLink Documents/APA 2017/leads.csv");
+       LeadSetCreator test = new LeadSetCreator("/home/chris/Desktop/leads.csv");
        ArrayList<Lead> leads = test.getLeadSet();
        String[] headers = test.getHeaders();
 

@@ -36,7 +36,11 @@ public class CsvParser extends ArrayList<String[]> {
             if(Character.toString(string.charAt(0)).matches("'") ||
                     Character.toString(string.charAt(0)).matches("\"")){
                 for (String last: variableSets.get(variableSets.size()-1)) {
-                    fixString.append(last);
+                    if(last.contains(",")){
+                        fixString.append(",\"" + last + "\"");
+                    }else{
+                        fixString.append("," + last);
+                    }
                 }
                 fixString.reverse();
                 lineTrim(fixString);
