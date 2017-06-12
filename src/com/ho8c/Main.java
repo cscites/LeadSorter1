@@ -1,14 +1,17 @@
 package com.ho8c;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
-       LeadSetCreator test = new LeadSetCreator("/home/chris/Desktop/leads.csv");
+    public static void main(String[] args) throws IOException {
+       LeadSetCreator test = new LeadSetCreator("C:/Users/chris.sites/Desktop/PLink Documents/AAN 2017/leads.csv");
+       ClientSetCreator cTest = new ClientSetCreator("C:/Users/chris.sites/Desktop/clientList.csv");
        ArrayList<Lead> leads = test.getLeadSet();
+       ArrayList<Client> clients = cTest.getClientSet();
        String[] headers = test.getHeaders();
+       String[] clientHeaders = cTest.getHeaders();
 
         for (String heads:headers) {
             System.out.print(heads + " | ");
@@ -42,6 +45,18 @@ public class Main {
         }
 
         System.out.println(leads.size());
+
+        for (String heads:clientHeaders) {
+            System.out.print(heads + " | ");
+        }
+        System.out.println();
+
+        for (Client client: clients) {
+            System.out.print("Opportunity Name: " + client.getOpportunityName() + " | ");
+            System.out.print("Type: " + client.getType() + " | ");
+            System.out.println("Account Name: " + client.getAccountName() + " | ");
+        }
+        System.out.println(clients.size());
     }
 }
 
